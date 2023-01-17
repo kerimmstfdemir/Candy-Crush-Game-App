@@ -7,6 +7,17 @@ const Home = () => {
     const { userInfos, setUserInfos } = useContext(UserContext)
     const navigate = useNavigate()
 
+    const handleClick = (e) => {
+        e.preventDefault();
+        if (userInfos?.username) {
+            navigate("/candycrush")
+        } else {
+            alert("Please enter a username!!")
+        }
+        
+    }
+
+    console.log(userInfos);
     return (
         <div className="h-screen flex flex-row justify-center items-center">
             <div className="w-full h-[30rem] max-w-2xl max-h-lg ">
@@ -21,6 +32,7 @@ const Home = () => {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-[1.15rem] text-gray-700 leading-tight focus:outline-cyan-600 focus:shadow-outline"
                             id="username"
                             type="text"
+                            value={userInfos?.username}
                             placeholder="Enter your username..."
                             onChange={(e) => setUserInfos({...userInfos, username:e.target.value})}
                         />
@@ -28,7 +40,7 @@ const Home = () => {
                     <div className="flex items-center justify-center">
                         <button
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="button" onClick={() => navigate("/candycrush")}>
+                            type="button" onClick={handleClick}>
                             Continue
                         </button>
                     </div>
