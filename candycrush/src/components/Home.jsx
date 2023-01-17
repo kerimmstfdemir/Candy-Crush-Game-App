@@ -1,5 +1,12 @@
+import { useContext } from "react"
+import { UserContext } from "../context/context"
+import { useNavigate } from "react-router-dom"
+
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const Home = () => {
+    const { userInfos, setUserInfos } = useContext(UserContext)
+    const navigate = useNavigate()
+
     return (
         <div className="h-screen flex flex-row justify-center items-center">
             <div className="w-full h-[30rem] max-w-2xl max-h-lg ">
@@ -15,13 +22,13 @@ const Home = () => {
                             id="username"
                             type="text"
                             placeholder="Enter your username..."
+                            onChange={(e) => setUserInfos({...userInfos, username:e.target.value})}
                         />
                     </div>
-
                     <div className="flex items-center justify-center">
                         <button
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="button">
+                            type="button" onClick={() => navigate("/candycrush")}>
                             Continue
                         </button>
                     </div>

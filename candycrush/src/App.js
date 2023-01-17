@@ -1,5 +1,6 @@
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
+import { UserContext } from './context/context';
 import AppRouter from './router/AppRouter';
 
 function App() {
@@ -8,9 +9,6 @@ function App() {
     username : "",
     score:0
   })
-
-  //? Creating Context
-  const UserContext = createContext();
 
   return (
     <UserContext.Provider value={{ userInfos, setUserInfos }}>
