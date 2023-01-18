@@ -27,6 +27,28 @@ const GameBoard = () => {
     }
   }
 
+  //? Check the matching 3-colors in the rows at the same time and assign blank if any.
+  const checkRowOfThree = () => {
+    const notValid = []
+    //* creates notValid array for row of three
+    for (let i = 0; i < width * width; i++) {
+      if (i % width === width - 2 || i % width === width - 1) {
+        notValid.push(i)
+      }
+    }
+
+    for (let i = 0; i < width * width; i++) {
+      const rowOfThree = [i, i + 1, i + 2]
+      const checkedColor = colorsArr[i]
+
+      if (notValid.includes(i)) continue
+
+      if (rowOfThree.every(square => colorsArr[square] === checkedColor)) {
+        rowOfThree.forEach(square => colorsArr[square] = "")
+      }
+    }
+  }
+
   const createBoard = () => {
     const randomColors = []
     for (let i = 0; i < width*width; i++){
@@ -43,13 +65,14 @@ const GameBoard = () => {
   useEffect(() => {
     const timer = setInterval(() => {
         checkColumnOfThree()
+        checkRowOfThree()
         setColorsArr([...colorsArr])
     },100)
 
     return () => {
       clearInterval(timer)
     }
-  }, [checkColumnOfThree])
+  }, [checkColumnOfThree, checkRowOfThree, colorsArr])
 
   console.log(colorsArr)
 
