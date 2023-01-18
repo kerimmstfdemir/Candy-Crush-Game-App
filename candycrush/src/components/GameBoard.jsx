@@ -117,6 +117,23 @@ const GameBoard = () => {
     }
   }
 
+  const moveIntoSquareBelow = () => {
+    for (let i = 0; i < width * width - width; i++) {
+      const firstRow = Array.from({ length: width }, (_, i) => i);
+      const isFirstRow = firstRow.includes(i)
+
+      if (isFirstRow && colorsArr[i] === "") {
+        const randomNumber = Math.floor(Math.random() * candyCrushColors.length)
+        colorsArr[i] = candyCrushColors[randomNumber]
+    }
+
+      if (colorsArr[i + width] === "") {
+        colorsArr[i + width] = colorsArr[i]
+        colorsArr[i] = ""
+      }
+    }
+  }
+
   const createBoard = () => {
     const randomColors = []
     for (let i = 0; i < width*width; i++){
@@ -138,13 +155,14 @@ const GameBoard = () => {
         checkRowOfFour()
         checkColumnOfThree()
         checkRowOfThree()
+        moveIntoSquareBelow()
         setColorsArr([...colorsArr])
     },100)
 
     return () => {
       clearInterval(timer)
     }
-  }, [checkColumnOfFive, checkRowOfFive, checkColumnOfFour, checkRowOfFour, checkColumnOfThree, checkRowOfThree, colorsArr])
+  }, [checkColumnOfFive, checkRowOfFive, checkColumnOfFour, checkRowOfFour, checkColumnOfThree, checkRowOfThree, moveIntoSquareBelow, colorsArr])
 
   console.log(colorsArr)
 
