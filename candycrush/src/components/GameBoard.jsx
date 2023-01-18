@@ -15,6 +15,18 @@ const GameBoard = () => {
     "yellow"
   ]
 
+  //? Check the matching 3-colors in the columns at the same time and assign blank if any.
+  const checkColumnOfThree = () => {
+    for (let i = 0; i <=(width * (width - 2) - 1); i++) {
+      const columnOfThree = [i, i + width, i + 2 * width]
+      const checkedColor = colorsArr[i]
+
+      if (columnOfThree.every(square => colorsArr[square] === checkedColor)) {
+        columnOfThree.forEach(square => colorsArr[square] = "")
+      }
+    }
+  }
+
   const createBoard = () => {
     const randomColors = []
     for (let i = 0; i < width*width; i++){
@@ -27,6 +39,17 @@ const GameBoard = () => {
   useEffect(() => {
     createBoard();
   }, [])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+        checkColumnOfThree()
+        setColorsArr([...colorsArr])
+    },100)
+
+    return () => {
+      clearInterval(timer)
+    }
+  }, [checkColumnOfThree])
 
   console.log(colorsArr)
 
