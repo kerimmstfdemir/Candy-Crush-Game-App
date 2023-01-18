@@ -15,7 +15,7 @@ const GameBoard = () => {
     "yellow"
   ]
 
-  //? Check the matching 3-colors in the columns at the same time and assign blank if any.
+  //? Check the matching 4-colors in the columns at the same time and assign blank if any.
   const checkColumnOfFour = () => {
     for (let i = 0; i <=(width * (width - 3) - 1); i++) {
       const columnOfFour = [i, i + width, i + 2 * width, i + 3 * width]
@@ -23,6 +23,28 @@ const GameBoard = () => {
 
       if (columnOfFour.every(square => colorsArr[square] === checkedColor)) {
         columnOfFour.forEach(square => colorsArr[square] = "")
+      }
+    }
+  }
+
+  //? Check the matching 4-colors in the rows at the same time and assign blank if any.
+  const checkRowOfFour = () => {
+    const notValid = []
+    //* creates notValid array for row of three
+    for (let i = 0; i < width * width; i++) {
+      if (i % width === width - 3 || i % width === width - 2 || i % width === width - 1) {
+        notValid.push(i)
+      }
+    }
+
+    for (let i = 0; i < width * width; i++) {
+      const rowOfFour = [i, i + 1, i + 2, i + 3]
+      const checkedColor = colorsArr[i]
+
+      if (notValid.includes(i)) continue
+
+      if (rowOfFour.every(square => colorsArr[square] === checkedColor)) {
+        rowOfFour.forEach(square => colorsArr[square] = "")
       }
     }
   }
@@ -77,6 +99,7 @@ const GameBoard = () => {
   useEffect(() => {
     const timer = setInterval(() => {
         checkColumnOfFour()
+        checkRowOfFour()
         checkColumnOfThree()
         checkRowOfThree()
         setColorsArr([...colorsArr])
@@ -85,7 +108,7 @@ const GameBoard = () => {
     return () => {
       clearInterval(timer)
     }
-  }, [checkColumnOfFour, checkColumnOfThree, checkRowOfThree, colorsArr])
+  }, [checkColumnOfFour, checkRowOfFour, checkColumnOfThree, checkRowOfThree, colorsArr])
 
   console.log(colorsArr)
 
