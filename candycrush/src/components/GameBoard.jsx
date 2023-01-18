@@ -15,6 +15,18 @@ const GameBoard = () => {
     "yellow"
   ]
 
+  //? Check the matching 5-colors in the columns at the same time and assign blank if any.
+  const checkColumnOfFive = () => {
+    for (let i = 0; i <=(width * (width - 4) - 1); i++) {
+      const columnOfFive = [i, i + width, i + 2 * width, i + 3 * width, i + 4 * width]
+      const checkedColor = colorsArr[i]
+
+      if (columnOfFive.every(square => colorsArr[square] === checkedColor)) {
+        columnOfFive.forEach(square => colorsArr[square] = "")
+      }
+    }
+  }
+
   //? Check the matching 4-colors in the columns at the same time and assign blank if any.
   const checkColumnOfFour = () => {
     for (let i = 0; i <=(width * (width - 3) - 1); i++) {
@@ -98,6 +110,7 @@ const GameBoard = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
+        checkColumnOfFive()
         checkColumnOfFour()
         checkRowOfFour()
         checkColumnOfThree()
@@ -108,7 +121,7 @@ const GameBoard = () => {
     return () => {
       clearInterval(timer)
     }
-  }, [checkColumnOfFour, checkRowOfFour, checkColumnOfThree, checkRowOfThree, colorsArr])
+  }, [checkColumnOfFive, checkColumnOfFour, checkRowOfFour, checkColumnOfThree, checkRowOfThree, colorsArr])
 
   console.log(colorsArr)
 
