@@ -1,6 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react"
 
+//? import candy images
+import blueCandy from "../assests/game-images/blue-candy.png"
+import greenCandy from "../assests/game-images/green-candy.png"
+import orangeCandy from "../assests/game-images/orange-candy.png"
+import purpleCandy from "../assests/game-images/purple-candy.png"
+import redCandy from "../assests/game-images/red-candy.png"
+import yellowCandy from "../assests/game-images/yellow-candy.png"
+import blank from "../assests/game-images/blank.png"
+
 const GameBoard = () => {
 
   const [colorsArr, setColorsArr] = useState([])
@@ -10,12 +19,12 @@ const GameBoard = () => {
 
   const width = 8
   const candyCrushColors = [
-    "blue",
-    "green",
-    "orange",
-    "purple",
-    "red",
-    "yellow"
+    blueCandy,
+        greenCandy,
+        orangeCandy,
+        purpleCandy,
+        redCandy,
+        yellowCandy
   ]
 
   //? Check the matching 5-colors in the columns at the same time and assign blank if any.
@@ -25,7 +34,7 @@ const GameBoard = () => {
       const checkedColor = colorsArr[i]
 
       if (columnOfFive.every(square => colorsArr[square] === checkedColor)) {
-        columnOfFive.forEach(square => colorsArr[square] = "")
+        columnOfFive.forEach(square => colorsArr[square] = blank)
         return true
       }
     }
@@ -48,7 +57,7 @@ const GameBoard = () => {
       if (notValid.includes(i)) continue
 
       if (rowOfFive.every(square => colorsArr[square] === checkedColor)) {
-        rowOfFive.forEach(square => colorsArr[square] = "")
+        rowOfFive.forEach(square => colorsArr[square] = blank)
         return true
       }
     }
@@ -61,7 +70,7 @@ const GameBoard = () => {
       const checkedColor = colorsArr[i]
 
       if (columnOfFour.every(square => colorsArr[square] === checkedColor)) {
-        columnOfFour.forEach(square => colorsArr[square] = "")
+        columnOfFour.forEach(square => colorsArr[square] = blank)
         return true
       }
     }
@@ -84,7 +93,7 @@ const GameBoard = () => {
       if (notValid.includes(i)) continue
 
       if (rowOfFour.every(square => colorsArr[square] === checkedColor)) {
-        rowOfFour.forEach(square => colorsArr[square] = "")
+        rowOfFour.forEach(square => colorsArr[square] = blank)
         return true
       }
     }
@@ -97,7 +106,7 @@ const GameBoard = () => {
       const checkedColor = colorsArr[i]
 
       if (columnOfThree.every(square => colorsArr[square] === checkedColor)) {
-        columnOfThree.forEach(square => colorsArr[square] = "")
+        columnOfThree.forEach(square => colorsArr[square] = blank)
         return true
       }
     }
@@ -120,7 +129,7 @@ const GameBoard = () => {
       if (notValid.includes(i)) continue
 
       if (rowOfThree.every(square => colorsArr[square] === checkedColor)) {
-        rowOfThree.forEach(square => colorsArr[square] = "")
+        rowOfThree.forEach(square => colorsArr[square] = blank)
         return true
       }
     }
@@ -132,14 +141,14 @@ const GameBoard = () => {
       const firstRow = Array.from({ length: width }, (_, i) => i);
       const isFirstRow = firstRow.includes(i)
 
-      if (isFirstRow && colorsArr[i] === "") {
+      if (isFirstRow && colorsArr[i] === blank) {
         const randomNumber = Math.floor(Math.random() * candyCrushColors.length)
         colorsArr[i] = candyCrushColors[randomNumber]
       }
 
-      if (colorsArr[i + width] === "") {
+      if (colorsArr[i + width] === blank) {
         colorsArr[i + width] = colorsArr[i]
-        colorsArr[i] = ""
+        colorsArr[i] = blank
       }
     }
   }
@@ -162,8 +171,8 @@ const GameBoard = () => {
     const squareBeingDraggedId = parseInt(squareBeingDragged.getAttribute("data-id"))
     const squareBeingReplacedId = parseInt(squareBeingReplaced.getAttribute("data-id"))
 
-    colorsArr[squareBeingReplacedId] = squareBeingDragged.style.backgroundColor
-    colorsArr[squareBeingDraggedId] = squareBeingReplaced.style.backgroundColor
+    colorsArr[squareBeingReplacedId] = squareBeingDragged.getAttribute("src")
+    colorsArr[squareBeingDraggedId] = squareBeingReplaced.getAttribute("src")
 
     console.log("squareBeingDraggedId :", squareBeingDraggedId);
     console.log("squareBeingReplacedId :", squareBeingReplacedId);
@@ -192,8 +201,8 @@ const GameBoard = () => {
       setSquareBeingDragged(null)
       setSquareBeingReplaced(null)
     } else {
-      colorsArr[squareBeingReplacedId] = squareBeingReplaced.style.backgroundColor
-      colorsArr[squareBeingDraggedId] = squareBeingDragged.style.backgroundColor
+      colorsArr[squareBeingReplacedId] = squareBeingReplaced.getAttribute("src")
+      colorsArr[squareBeingDraggedId] = squareBeingDragged.getAttribute("src")
       setColorsArr([...colorsArr])
     }
   }
@@ -238,7 +247,7 @@ const GameBoard = () => {
                 key={index}
                 className="w-[4.375rem] h-[4.375rem]"
                 alt={item}
-                style={{ backgroundColor: item }}
+                src={item}
                 data-id={index}
                 draggable={true}
                 onDragStart={dragStart}
