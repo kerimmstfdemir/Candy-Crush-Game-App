@@ -6,6 +6,7 @@ const GameBoard = () => {
   const [colorsArr, setColorsArr] = useState([])
   const [squareBeingDragged, setSquareBeingDragged] = useState(null)
   const [squareBeingReplaced, setSquareBeingReplaced] = useState(null)
+  const [validMove, setValidMove] = useState(false)
 
   const width = 8
   const candyCrushColors = [
@@ -174,7 +175,7 @@ const GameBoard = () => {
       squareBeingDraggedId + width
     ]
 
-    const validMove = validMoves.includes(squareBeingReplacedId)
+    setValidMove(true ? validMoves.includes(squareBeingReplacedId) : false)
     console.log(validMove);
 
     const isAColumnOfFive = checkColumnOfFive()
@@ -187,6 +188,7 @@ const GameBoard = () => {
     if (squareBeingReplacedId &&
       validMove &&
       (isAColumnOfFive || isARowOfFive || isARowOfThree || isARowOfFour || isAColumnOfFour || isAColumnOfThree)) {
+
       setSquareBeingDragged(null)
       setSquareBeingReplaced(null)
     } else {
@@ -219,7 +221,7 @@ const GameBoard = () => {
       checkRowOfThree()
       moveIntoSquareBelow()
       setColorsArr([...colorsArr])
-    }, 100)
+    }, 150)
 
     return () => {
       clearInterval(timer)
