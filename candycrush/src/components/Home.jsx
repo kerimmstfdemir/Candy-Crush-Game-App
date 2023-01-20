@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { UserContext } from "../context/context"
 import { useNavigate } from "react-router-dom"
-import candycrush from "../assests/candy-crush.png"
+import candycrush from "../assets/candy-crush.png"
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const Home = () => {

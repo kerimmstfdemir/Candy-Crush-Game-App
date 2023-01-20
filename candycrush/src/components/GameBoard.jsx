@@ -2,13 +2,13 @@
 import { useEffect, useState } from "react"
 
 //? import candy images
-import blueCandy from "../assests/game-images/blue-candy.png"
-import greenCandy from "../assests/game-images/green-candy.png"
-import orangeCandy from "../assests/game-images/orange-candy.png"
-import purpleCandy from "../assests/game-images/purple-candy.png"
-import redCandy from "../assests/game-images/red-candy.png"
-import yellowCandy from "../assests/game-images/yellow-candy.png"
-import blank from "../assests/game-images/blank.png"
+import blueCandy from "../assets/game-images/blue-candy.png"
+import greenCandy from "../assets/game-images/green-candy.png"
+import orangeCandy from "../assets/game-images/orange-candy.png"
+import purpleCandy from "../assets/game-images/purple-candy.png"
+import redCandy from "../assets/game-images/red-candy.png"
+import yellowCandy from "../assets/game-images/yellow-candy.png"
+import blank from "../assets/game-images/blank.png"
 
 const GameBoard = () => {
 
@@ -154,7 +154,7 @@ const GameBoard = () => {
   }
 
   const dragStart = (e) => {
-    console.log(e.target);  //* Alttaki console log'dan sonra yazıldı.
+    console.log(e.target);
     console.log("Drag started")
     setSquareBeingDragged(e.target)
   }
@@ -238,14 +238,14 @@ const GameBoard = () => {
   }, [checkColumnOfFive, checkRowOfFive, checkColumnOfFour, checkRowOfFour, checkColumnOfThree, checkRowOfThree, moveIntoSquareBelow, colorsArr])
 
   return (
-    <div className="flex justify-center p-12">
+    <div className="flex justify-center p-12]">
       <div className="w-[35rem] h-[35rem] flex flex-wrap">
         {colorsArr.map((item, index) => {
           return (
             <>
               <img
                 key={index}
-                className="w-[4.375rem] h-[4.375rem]"
+                className="w-[4.375rem] h-[4.375rem] hover:cursor-grab active:cursor-grabbing"
                 alt={item}
                 src={item}
                 data-id={index}
